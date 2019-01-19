@@ -11,25 +11,25 @@ License
 This software was developed by employees of the National Institute of Standards
 and Technology (NIST), an agency of the Federal Government and is being made
 available as a public service. Pursuant to title 17 United States Code Section
-105, works of NIST employees are not subject to copyright protection in the 
+105, works of NIST employees are not subject to copyright protection in the
 United States.  This software may be subject to foreign copyright.  Permission
 in the United States and in foreign countries, to the extent that NIST may hold
 copyright, to use, copy, modify, create derivative works, and distribute this
 software and its documentation without fee is hereby granted on a non-exclusive
-basis, provided that this notice and disclaimer of warranty appears in all 
+basis, provided that this notice and disclaimer of warranty appears in all
 copies.
 
 THE SOFTWARE IS PROVIDED 'AS IS' WITHOUT ANY WARRANTY OF ANY KIND, EITHER
 EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY
 THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM
-INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE 
+INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE
 SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT
 SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT,
 INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR
 IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY,
 CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR
-PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT 
+PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT
 OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER.
 
 
@@ -75,9 +75,9 @@ Design note:
 
 All setting batches are invoked from the main function level and different
 groups of settings can be commented out to focus on specific issues.
-Each setting is implemented by a separate function that gets called from 
-different batch functons. Settings in similar categories are typically grouped  
-into each batch, and these batches are called by the main function.  
+Each setting is implemented by a separate function that gets called from
+different batch functons. Settings in similar categories are typically grouped
+into each batch, and these batches are called by the main function.
 Each separate setting function is responsible for writing
 the various profiles, displaying current values, outputing a brief
 message for listing the settings ls-style, and, when additional
@@ -111,7 +111,7 @@ specific_user_flag=""
 
 #Used to skip time-consuming print and set operations. This is used in the function
 #CCE_79502_1_update_apple_software
-skip_flag=""  
+skip_flag=""
 
 
 home_path=""
@@ -146,7 +146,7 @@ user_settings_list=""
 main() {
     parse_arguments "$@"
 
-    if [ "$v_flag" != "" ]; then 
+    if [ "$v_flag" != "" ]; then
         echo "SAM script verbose mode enabled."
     fi
     echo "Executing system-wide settings."
@@ -165,14 +165,14 @@ main() {
     updates
     wireless
 
-    #Contains functions for setting permissions in home directories 
+    #Contains functions for setting permissions in home directories
     #Call this last of all the batch functions
     access_control
 
     # allows all user settings to be run for the specified users
     apply_settings_for_selected_users
 
-    # performs tasks such as process killing 
+    # performs tasks such as process killing
     final_tasks
 }
 
@@ -197,7 +197,7 @@ auditing() {
     CCE_79411_5_audit_log_retention
     CCE_79412_3_do_not_send_diagnostic_info_to_apple
     CCE_79413_1_set_audit_control_flags
-}	
+}
 
 
 ######################################################################
@@ -220,12 +220,12 @@ CCE_79431_3_start_screen_saver_hot_corner"
     #clears the current global password policy to ensure it is set properly with this script
     if [ "$set_flag" != "" ]; then
         pwpolicy -clearaccountpolicies
-        
+
         while IFS= read -r user_name; do
             if [ "$user_name" != "" ]; then
                 pwpolicy -u "$user_name" -clearaccountpolicies
             fi
-        
+
         done <<< "$user_list"
     fi
 
@@ -256,7 +256,7 @@ CCE_79442_0_terminal_secure_keyboard"
 
 ######################################################################
 firewall() {
-    CCE_79443_8_allow_signed_downloaded_sw_receive_connections 
+    CCE_79443_8_allow_signed_downloaded_sw_receive_connections
     CCE_79444_6_allow_signed_sw_receive_connections
     CCE_79445_3_enable_firewall_logging_detail_level
 
@@ -310,9 +310,9 @@ network_services() {
     CCE_79480_0_change_net_bios_name
 
     CCE_79481_8_disable_apple_file_server
-    CCE_79482_6_disable_bluetooth_daemon 
+    CCE_79482_6_disable_bluetooth_daemon
     CCE_79483_4_disable_bonjour_advertising
-    CCE_79484_2_disable_nfs 
+    CCE_79484_2_disable_nfs
     CCE_79485_9_disable_wifi_services
     CCE_79486_7_restrict_remote_apple_events_to_specific_users
     CCE_79487_5_restrict_remote_management_to_specific_users
@@ -339,7 +339,7 @@ ssh() {
     CCE_79498_2_ssh_remove_non_fips_140_2_ciphers
     CCE_79499_0_ssh_remove_non_fips_140_2_macs
     CCE_79500_5_ssh_restrict_users
-    CCE_79501_3_ssh_set_client_timeout 
+    CCE_79501_3_ssh_set_client_timeout
 }
 
 
@@ -372,23 +372,23 @@ CCE_79415_6_add_login_banner () {
 
     local friendly_name="GUI login banner"
     local banner_file="/Library/Security/PolicyBanner.txt"
-    local policy_text="You are accessing a U.S. Government information system, which includes: 1) this computer, 2) this computer network, 3) all computers connected to this network, and 4) all devices and storage media attached to this network or to a computer on this network. You understand and consent to the following: you may access this information system for authorized use only; you have no reasonable expectation of privacy regarding any communication of data transiting or stored on this information system; at any time and for any lawful Government purpose, the Government may monitor, intercept, and search and seize any communication or data transiting or stored on this information system; and any communications or data transiting or stored on this information system may be disclosed or used for any lawful Government purpose."
+    local policy_text=policy_text="You are accessing a Ulobby ApS information system, which includes: 1) this computer, 2) this computer network, 3) all computers connected to this network, and 4) all devices and storage media attached to this network or to a computer on this network. You understand and consent to the following: you may access this information system for authorized use only; you have no reasonable expectation of privacy regarding any communication of data transiting or stored on this information system; at any time and for any legitimate business purpose, Ulobby ApS may monitor, intercept, and search and seize any communication or data transiting or stored on this information system; and any communications or data transiting or stored on this information system may be disclosed or used for any lawful business purpose."
     local banner_exists=0;
 
     if [ -e "$banner_file" ]; then
         banner_exists="$(grep -c "$policy_text" "$banner_file")"
     fi
 
-    
+
     if [ "$print_flag" != "" ]; then
         if [ "$banner_exists" -gt 0 ]; then
             echo "$friendly_name is enabled"
         else
             echo "$friendly_name is disabled"
         fi
-    
+
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
         "ent")
@@ -446,16 +446,16 @@ CCE_79414_9_add_cli_login_banner () {
         banner_exists="$(grep -c "$policy_text" "$banner_file")"
     fi
 
-    
+
     if [ "$print_flag" != "" ]; then
         if [ "$banner_exists" -gt 0 ]; then
             echo "$friendly_name is enabled"
         else
             echo "$friendly_name is disabled"
         fi
-    
+
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
         "ent")
@@ -501,7 +501,7 @@ CCE_79414_9_add_cli_login_banner () {
 ######################################################################
 CCE_79416_4_console_login () {
     local doc="CCE_79416_4_console_login                   (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
 
     local file="/Library/Preferences/com.apple.loginwindow.plist"
@@ -564,7 +564,7 @@ CCE_79416_4_console_login () {
     fi
 
 # If console login is enabled, typing the string ">console" for the user
-# name should give a console login. This can be done only when the Users & 
+# name should give a console login. This can be done only when the Users &
 # Groups option for "Display login window as:" is set to "Name and password"
 
 # macOS 10.12
@@ -648,7 +648,7 @@ CCE_79429_7_retries_until_hint () {
     local doc="CCE_79429_7_retries_until_hint              (manual-test-PASSED)"
 
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local file="/Library/Preferences/com.apple.loginwindow.plist"
     local friendly_name="password retries until hint"
     local setting_name="RetriesUntilHint"
@@ -707,7 +707,7 @@ CCE_79429_7_retries_until_hint () {
                 ;;
         esac
     fi
-    
+
 
 # macOS 10.12 testing
 # Tested manually; hints enabled or disabled both in preferences and
@@ -775,7 +775,7 @@ CCE_79418_0_fast_user_switching () {
                 ;;
         esac
     fi
-    
+
 
 
 # macOS 10.12
@@ -963,7 +963,7 @@ CCE_79430_5_screensaver_grace_period () {
                 if [ "$delay" != "$target_delay" ]; then
                     echo "setting screensaver grace period to $target_delay seconds";
                     defaults write "$file" "$setting_name" -int "$target_delay"
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "$friendly_name is already set to $target_delay seconds"
@@ -973,7 +973,7 @@ CCE_79430_5_screensaver_grace_period () {
                 if [ "$delay" != "$target_delay" ]; then
                     echo "setting screensaver grace period to $target_delay seconds";
                     defaults write "$file" "$setting_name "-int "$target_delay"
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "$friendly_name is already set to $target_delay seconds"
@@ -983,7 +983,7 @@ CCE_79430_5_screensaver_grace_period () {
                 if [ "$delay" != "$target_delay" ]; then
                     echo "setting screensaver grace period to $target_delay seconds";
                     defaults write "$file" "$setting_name" -int "$target_delay"
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "$friendly_name is already set to $target_delay seconds"
@@ -993,7 +993,7 @@ CCE_79430_5_screensaver_grace_period () {
                 if [ "$delay" != "300" ]; then
                     echo "setting screensaver grace period to 300 seconds";
                     defaults write "$file" "$setting_name" -int 300
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "$friendly_name is already set to 300 seconds"
@@ -1047,7 +1047,7 @@ CCE_79431_3_start_screen_saver_hot_corner () {
                 if [ "$active" == 0 ]; then
                     echo "setting start screen saver to bottom-left hot corner";
                     defaults write "$file" wvous-bl-corner -int 5
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "start screen saver hot corner is already set"
@@ -1057,7 +1057,7 @@ CCE_79431_3_start_screen_saver_hot_corner () {
                 if [ "$active" == 0 ]; then
                     echo "setting start screen saver to bottom-left hot corner";
                     defaults write "$file" wvous-bl-corner -int 5
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "start screen saver hot corner is already set"
@@ -1067,7 +1067,7 @@ CCE_79431_3_start_screen_saver_hot_corner () {
                 if [ "$active" == 0 ]; then
                     echo "setting start screen saver to bottom-left hot corner";
                     defaults write "$file" wvous-bl-corner -int 5
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "start screen saver hot corner is already set"
@@ -1077,7 +1077,7 @@ CCE_79431_3_start_screen_saver_hot_corner () {
                 if [ "$btm_left" == "5" ]; then
                     echo "removing action from bottom-left hot corner";
                     defaults write "$file" wvous-bl-corner -int 1
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "start screen saver bottom-left hot corner is already disabled"
@@ -1092,7 +1092,7 @@ CCE_79431_3_start_screen_saver_hot_corner () {
 
 # macOS 10.12
 # Requires restart to take effect. If this value is set through the script and the
-# user only logs out and back in, the setting goes back to its original value before 
+# user only logs out and back in, the setting goes back to its original value before
 # making the change. No command key modifiers were applied when enabling this.
 }
 
@@ -1157,7 +1157,7 @@ CCE_79417_2_desktop_idle_time () {
                     defaults write "$file" idleTime -int "$target_value"
 
                     add_processes_to_kill_list Dock cfprefsd
-                
+
                 else
                     echo "screensaver already starts after 20 minutes or less of idle time"
                 fi
@@ -1201,8 +1201,8 @@ CCE_79417_2_desktop_idle_time () {
         fi
     fi
 
-#NOTE: If the screensaver is set to a value that is not an option through the GUI (never, 
-#1, 2, 5, 10, 20, 30, 60 minutes), the value will not stay after the preferences window 
+#NOTE: If the screensaver is set to a value that is not an option through the GUI (never,
+#1, 2, 5, 10, 20, 30, 60 minutes), the value will not stay after the preferences window
 #is opened. It will change automatically to the default value of 20 minutes.
 
 #macOS 10.12
@@ -1213,9 +1213,9 @@ CCE_79417_2_desktop_idle_time () {
 ######################################################################
 CCE_79419_8_password_complex_passwords_alphabetic_char () {
     local doc="CCE_79419_8_password_complex_passwords_alphabetic_char      (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     #store the curent policy in a temp file
     local temp_file="${script_dir}/samc_current_pwpolicy.plist"
     pwpolicy -getaccountpolicies | tail -n +2 > "$temp_file"
@@ -1226,13 +1226,13 @@ CCE_79419_8_password_complex_passwords_alphabetic_char () {
     local parameter_value="1"
     local policy_content="policyAttributePassword matches \'(.*[A-Za-z].*)\{$parameter_value\}\'"
     local policy_identifier="Contains at least $parameter_value alphabetic char(s)"
-    
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     local current_value="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name" | sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
-    
+
+
     if [ "$print_flag" != "" ]; then
         if [ "$current_value" == "" ]; then
             echo "policy does not exist for $friendly_name"
@@ -1246,12 +1246,12 @@ CCE_79419_8_password_complex_passwords_alphabetic_char () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1259,12 +1259,12 @@ CCE_79419_8_password_complex_passwords_alphabetic_char () {
                 ;;
             "soho")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1272,12 +1272,12 @@ CCE_79419_8_password_complex_passwords_alphabetic_char () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1287,9 +1287,9 @@ CCE_79419_8_password_complex_passwords_alphabetic_char () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
@@ -1306,7 +1306,7 @@ CCE_79419_8_password_complex_passwords_alphabetic_char () {
 ######################################################################
 CCE_79420_6_password_complex_passwords_numeric_char () {
     local doc="CCE_79420_6_password_complex_passwords_numeric_char       (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
 
     #store the curent policy in a temp file
@@ -1319,13 +1319,13 @@ CCE_79420_6_password_complex_passwords_numeric_char () {
     local policy_identifier="Contains at least $parameter_value numeric char(s)"
     local parameter_name="minimumNumericCharacters"
     local policy_content="policyAttributePassword matches \'(.*[0-9].*)\{$parameter_value\}\'"
-    
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     local current_value="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name" | sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
-    
+
+
     if [ "$print_flag" != "" ]; then
         if [ "$current_value" == "" ]; then
             echo "policy does not exist for $friendly_name"
@@ -1339,12 +1339,12 @@ CCE_79420_6_password_complex_passwords_numeric_char () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1352,12 +1352,12 @@ CCE_79420_6_password_complex_passwords_numeric_char () {
                 ;;
             "soho")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1365,12 +1365,12 @@ CCE_79420_6_password_complex_passwords_numeric_char () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1380,10 +1380,10 @@ CCE_79420_6_password_complex_passwords_numeric_char () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
-    
+    fi
+
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
     pw_content_index=$(( pw_content_index + 1 ))
@@ -1399,7 +1399,7 @@ CCE_79420_6_password_complex_passwords_numeric_char () {
 ######################################################################
 CCE_79421_4_password_complex_passwords_symbolic_char () {
     local doc="CCE_79421_4_password_complex_passwords_symbolic_char       (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
 
     #store the curent policy in a temp file
@@ -1412,13 +1412,13 @@ CCE_79421_4_password_complex_passwords_symbolic_char () {
     local policy_content="policyAttributePassword matches \'(.*[^0-9a-zA-Z].*)\{$parameter_value\}\'"
     local policy_identifier="Contains at least $parameter_value symbolic char(s)"
     local parameter_name="minimumSymbolicCharacters"
-    
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     local current_value="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name" | sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
-    
+
+
     if [ "$print_flag" != "" ]; then
         if [ "$current_value" == "" ]; then
             echo "policy does not exist for $friendly_name"
@@ -1432,12 +1432,12 @@ CCE_79421_4_password_complex_passwords_symbolic_char () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1445,12 +1445,12 @@ CCE_79421_4_password_complex_passwords_symbolic_char () {
                 ;;
             "soho")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1458,12 +1458,12 @@ CCE_79421_4_password_complex_passwords_symbolic_char () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1473,9 +1473,9 @@ CCE_79421_4_password_complex_passwords_symbolic_char () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
@@ -1505,13 +1505,13 @@ CCE_79427_1_password_uppercase_and_lowercase () {
     local policy_content="policyAttributePassword matches \'(.*[a-z].*[A-Z].*)|(.*[A-Z].*[a-z].*)\'"
     local policy_identifier="Contains at least 1 upper and 1 lower case char"
     local parameter_name="minimumMixedCaseInstances"
-    
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     local current_value="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name" | sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
-    
+
+
     if [ "$print_flag" != "" ]; then
         if [ "$current_value" == "" ]; then
             echo "policy does not exist for $friendly_name"
@@ -1525,12 +1525,12 @@ CCE_79427_1_password_uppercase_and_lowercase () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1538,12 +1538,12 @@ CCE_79427_1_password_uppercase_and_lowercase () {
                 ;;
             "soho")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1551,12 +1551,12 @@ CCE_79427_1_password_uppercase_and_lowercase () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1566,9 +1566,9 @@ CCE_79427_1_password_uppercase_and_lowercase () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
@@ -1576,7 +1576,7 @@ CCE_79427_1_password_uppercase_and_lowercase () {
 
     #remove temp file created here
     rm "$temp_file"
-    
+
 #macOS 10.12
 #Works using new pwpolicy commands with loading a plist file for global policies.
 }
@@ -1599,13 +1599,13 @@ CCE_79422_2_password_enforce_password_history_restriction () {
     local parameter_name="policyAttributePasswordHistoryDepth"
     local parameter_value="15"
     local policy_identifier="Last $parameter_value passwords cannot be reused"
-    
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     local current_value="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name" | sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
-    
+
+
     if [ "$print_flag" != "" ]; then
         if [ "$current_value" == "" ]; then
             echo "policy does not exist for $friendly_name"
@@ -1619,12 +1619,12 @@ CCE_79422_2_password_enforce_password_history_restriction () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1632,12 +1632,12 @@ CCE_79422_2_password_enforce_password_history_restriction () {
                 ;;
             "soho")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1645,12 +1645,12 @@ CCE_79422_2_password_enforce_password_history_restriction () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1660,9 +1660,9 @@ CCE_79422_2_password_enforce_password_history_restriction () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
@@ -1692,14 +1692,14 @@ CCE_79426_3_password_minimum_length () {
     local policy_content="policyAttributePassword matches \'(.){$parameter_value,}\'"
     local policy_identifier="Contains at least $parameter_value characters"
     local parameter_name="minimumChars"
-    
-    
+
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     local current_value="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name" | sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
-    
+
+
     if [ "$print_flag" != "" ]; then
         if [ "$current_value" == "" ]; then
             echo "policy does not exist for $friendly_name"
@@ -1713,12 +1713,12 @@ CCE_79426_3_password_minimum_length () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1726,12 +1726,12 @@ CCE_79426_3_password_minimum_length () {
                 ;;
             "soho")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1739,12 +1739,12 @@ CCE_79426_3_password_minimum_length () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to $parameter_value"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1754,9 +1754,9 @@ CCE_79426_3_password_minimum_length () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
@@ -1776,7 +1776,7 @@ CCE_79425_5_password_maximum_age () {
     local doc="CCE_79425_5_password_maximum_age       (manual-test-PASSED)"
 
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     #store the curent policy in a temp file
     local temp_file="${script_dir}/samc_current_pwpolicy.plist"
     pwpolicy -getaccountpolicies | tail -n +2 > "$temp_file"
@@ -1788,13 +1788,13 @@ CCE_79425_5_password_maximum_age () {
     local policy_content="policyAttributeCurrentTime > policyAttributeLastPasswordChangeTime + (policyAttributeExpiresEveryNDays * 24 * 60 * 60)"
     local policy_identifier="Password expires every $parameter_value days"
     local parameter_name="policyAttributeExpiresEveryNDays"
-    
-    
+
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     local current_value="$(defaults read "$temp_file" 2> /dev/null | egrep "^( *$parameter_name)" |  sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
+
     if [ "$print_flag" != "" ]; then
         if [ "$current_value" == "" ]; then
             echo "policy does not exist for $friendly_name"
@@ -1808,12 +1808,12 @@ CCE_79425_5_password_maximum_age () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to $parameter_value $timeUnit"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyParameters dict" "$temp_file"
@@ -1821,12 +1821,12 @@ CCE_79425_5_password_maximum_age () {
                 ;;
             "soho")
                 echo "setting $friendly_name to $parameter_value $timeUnit"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyParameters dict" "$temp_file"
@@ -1834,12 +1834,12 @@ CCE_79425_5_password_maximum_age () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to $parameter_value $timeUnit"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_change_index:policyParameters dict" "$temp_file"
@@ -1849,9 +1849,9 @@ CCE_79425_5_password_maximum_age () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
@@ -1875,13 +1875,13 @@ password_guessable_pattern_helper () {
     local parameter_value="3"
     local policy_identifier="Contains less than $parameter_value consecutive chars"
     local parameter_name="policyAttributeMaximumConsecutiveCharacters"
-    
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     #this policy has two requirements, so check both values
     local current_value="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name" | sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
+
 
     #global policies are first cleared when running with set flag
     if [ "$set_flag" != "" ]; then
@@ -1891,7 +1891,7 @@ password_guessable_pattern_helper () {
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1902,7 +1902,7 @@ password_guessable_pattern_helper () {
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1913,7 +1913,7 @@ password_guessable_pattern_helper () {
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1922,9 +1922,9 @@ password_guessable_pattern_helper () {
             "oem")
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
@@ -1940,7 +1940,7 @@ password_guessable_pattern_helper () {
 ######################################################################
 CCE_79424_8_password_guessable_pattern () {
     local doc="CCE_79424_8_password_guessable_pattern      (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
 
     #store the curent policy in a temp file
@@ -1953,21 +1953,21 @@ CCE_79424_8_password_guessable_pattern () {
     local parameter_value="3"
     local policy_identifier="Contains less than $parameter_value sequential chars"
     local parameter_name="policyAttributeMaximumSequentialCharacters"
-    
+
     #parameter2 is set in helper function; this is used for printing only
     local parameter_name2="policyAttributeMaximumConsecutiveCharacters"
-    
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     #this policy has two requirements, so check both values
     local current_value="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name" | sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
-    
+
     #current_value2 is set in helper function; this is used for printing only
     local current_value2="$(defaults read "$temp_file" 2> /dev/null | grep "$parameter_name2" | sed -E "s/ *$parameter_name2 *= *//" | sed "s/;//")"
-    
-    
-    
+
+
+
     if [ "$print_flag" != "" ]; then
         if [ "$current_value" == "" ] || [ "$current_value2" == "" ]; then
             echo "policy does not exist for $friendly_name"
@@ -1981,12 +1981,12 @@ CCE_79424_8_password_guessable_pattern () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to enabled"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -1994,12 +1994,12 @@ CCE_79424_8_password_guessable_pattern () {
                 ;;
             "soho")
                 echo "setting $friendly_name to enabled"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -2007,12 +2007,12 @@ CCE_79424_8_password_guessable_pattern () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to enabled"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_content_index:policyParameters dict" "$temp_file"
@@ -2022,9 +2022,9 @@ CCE_79424_8_password_guessable_pattern () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     #Rules must be added to the policy one-by-one, and using the proper array index. If
     #it is not incremented after each rule, the rules will overwrite one another.
@@ -2032,10 +2032,10 @@ CCE_79424_8_password_guessable_pattern () {
 
     #remove temp file created here
     rm "$temp_file"
-    
+
     #call helper function, since two paramaters are needed for this setting
     password_guessable_pattern_helper
-    
+
 
 #macOS 10.12
 #Works with all tested patterns, such as "aaa", "123.aaaa", "1234.aaa", "121".
@@ -2048,7 +2048,7 @@ CCE_79423_0_password_failed_login_lockout_policy () {
     local doc="CCE_79423_0_password_failed_login_lockout_policy      (manual-test-PASSED)"
 
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     #store the curent policy in a temp file
     local temp_file="${script_dir}/samc_current_pwpolicy.plist"
     pwpolicy -getaccountpolicies | tail -n +2 > "$temp_file"
@@ -2062,14 +2062,14 @@ CCE_79423_0_password_failed_login_lockout_policy () {
     local parameter_name2="policyAttributeMaximumFailedAuthentications"
     local parameter_value2="3"
     local policy_identifier="$parameter_value2 failed login attempts lock user accounts for $parameter_value $time_unit"
-    
+
     local plistbuddy="/usr/libexec/PlistBuddy"
     local category_exists="$($plistbuddy -c "Print :$policy_category" "$temp_file" 2> /dev/null | egrep -c "." 2> /dev/null)"
-    
+
     local current_value="$(defaults read "$temp_file" 2> /dev/null | egrep "^( *$parameter_name)" |  sed -E "s/ *$parameter_name *= *//" | sed "s/;//")"
 
     local current_value2="$(defaults read "$temp_file" 2> /dev/null | egrep "^( *$parameter_name2)" |  sed -E "s/ *$parameter_name2 *= *//" | sed "s/;//")"
-    
+
 
 
     if [ "$print_flag" != "" ]; then
@@ -2086,12 +2086,12 @@ CCE_79423_0_password_failed_login_lockout_policy () {
         case $profile_flag in
             "ent")
                 echo "setting $friendly_name to $parameter_value2 failed attempts cause $parameter_value $time_unit lockout"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyParameters dict" "$temp_file"
@@ -2100,12 +2100,12 @@ CCE_79423_0_password_failed_login_lockout_policy () {
                 ;;
             "soho")
                 echo "setting $friendly_name to $parameter_value2 failed attempts cause $parameter_value $time_unit lockout"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyParameters dict" "$temp_file"
@@ -2114,12 +2114,12 @@ CCE_79423_0_password_failed_login_lockout_policy () {
                 ;;
             "sslf")
                 echo "setting $friendly_name to $parameter_value2 failed attempts cause $parameter_value $time_unit lockout"
-                
+
                 #main array - create if it doesn't exist
                 if [ "$category_exists" == "0" ]; then
                     $plistbuddy -c "Add :$policy_category array" "$temp_file"
                 fi
-                
+
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyContent string $policy_content" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyIdentifier string $policy_identifier" "$temp_file"
                 $plistbuddy -c "Add :$policy_category:$pw_auth_index:policyParameters dict" "$temp_file"
@@ -2130,9 +2130,9 @@ CCE_79423_0_password_failed_login_lockout_policy () {
                 echo "Resetting global policies to default (none)"
                 ;;
         esac
-        
+
         pwpolicy -setaccountpolicies "$temp_file" &> /dev/null
-    fi    
+    fi
 
     pw_auth_index=$(( pw_auth_index + 1 ))
 
@@ -2152,19 +2152,19 @@ CCE_79428_9_require_admin_password_for_system_prefs () {
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
 
     local script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-    
-    
+
+
     local setting_value="" #by default on 10.12 password is not required
     local temp_file="${script_dir}/tmpsysprefs.plist"
     local db_table="system.preferences"
     local friendly_name="admin password required for system preferences"
-    
+
     # get the contents of the table containing the shared key
     security authorizationdb read "$db_table" > "$temp_file" 2> /dev/null
-    
+
     # get the value of the shared key
     setting_value="$(defaults read "$temp_file" shared)"
-    
+
     if [ "$print_flag" != "" ]; then
         # if shared is true, settings can be accessed by all users because
         # no password is required
@@ -2182,12 +2182,12 @@ CCE_79428_9_require_admin_password_for_system_prefs () {
             "ent")
                 if [ "$setting_value" == "true" ] || [ "$setting_value" == "1" ]; then
                     echo "enabling $friendly_name";
-                
+
                     # write the new value to the temp plist and then write the plist
                     # to the system.preferences table
                     defaults write "$temp_file" shared -bool false
                     security authorizationdb write "$db_table" < "$temp_file" 2> /dev/null
-                
+
                 else
                     echo "$friendly_name is already enabled"
                 fi
@@ -2195,12 +2195,12 @@ CCE_79428_9_require_admin_password_for_system_prefs () {
             "soho")
                 if [ "$setting_value" == "true" ] || [ "$setting_value" == "1" ]; then
                     echo "enabling $friendly_name";
-                
+
                     # write the new value to the temp plist and then write the plist
                     # to the system.preferences table
                     defaults write "$temp_file" shared -bool false
                     security authorizationdb write "$db_table" < "$temp_file" 2> /dev/null
-                
+
                 else
                     echo "$friendly_name is already enabled"
                 fi
@@ -2208,12 +2208,12 @@ CCE_79428_9_require_admin_password_for_system_prefs () {
             "sslf")
                 if [ "$setting_value" == "true" ] || [ "$setting_value" == "1" ]; then
                     echo "enabling $friendly_name";
-                
+
                     # write the new value to the temp plist and then write the plist
                     # to the system.preferences table
                     defaults write "$temp_file" shared -bool false
                     security authorizationdb write "$db_table" < "$temp_file" 2> /dev/null
-                
+
                 else
                     echo "$friendly_name is already enabled"
                 fi
@@ -2221,7 +2221,7 @@ CCE_79428_9_require_admin_password_for_system_prefs () {
             "oem")
                 if [ "$setting_value" == "false" ] || [ "$setting_value" == "0" ]; then
                     echo "disabling $friendly_name";
-                
+
                     # write the new value to the temp plist and then write the plist
                     # to the system.preferences table
                     defaults write "$temp_file" shared -bool true
@@ -2245,7 +2245,7 @@ CCE_79428_9_require_admin_password_for_system_prefs () {
 CCE_79404_0_all_files_in_a_users_home_dir_are_owned_by_that_user () {
     local doc="CCE_79404_0_all_files_in_a_users_home_dir_are_owned_by_that_user   (manual-test-PASSED)"
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     #since this can be a lengthy operation, only search if running in print or set mode
     if [ "$print_flag" != "" ] || [ "$set_flag" != "" ]; then
         local file_list="$(find $home_path ! -user $owner -print)"
@@ -2316,7 +2316,7 @@ CCE_79407_3_files_in_home_dir_group_owned_by_owners_group () {
 
     #since these can be lengthy operations, only search if running in print or set mode
     if [ "$print_flag" != "" ] || [ "$set_flag" != "" ]; then
-    
+
         # gets all groups the specified user is part of
         local groups=`groups $owner`
 
@@ -2440,7 +2440,7 @@ power_management_helper() {
         pmset -a disksleep 11
         pmset -a disksleep 10 #10.12 default value
     fi
-    
+
     if [ ! -e "/Library/Preferences/com.apple.PowerManagement.$hw_uuid.plist" ]; then
         pmset -a ttyskeepawake 0
         pmset -a ttyskeepawake 1 #10.12 default value
@@ -2646,7 +2646,7 @@ CCE_79439_6_dock_enable_autohide () {
                 if [ "$value" != "1" ]; then
                     echo "enabling $friendly_name";
                     defaults write $file $setting_name -bool true
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "$friendly_name is already enabled"
@@ -2656,7 +2656,7 @@ CCE_79439_6_dock_enable_autohide () {
                 if [ "$value" != "0" ]; then
                     echo "disabling $friendly_name";
                     defaults write $file $setting_name -bool false
-                
+
                     add_processes_to_kill_list Dock cfprefsd
                 else
                     echo "$friendly_name is already disabled"
@@ -2826,7 +2826,7 @@ CCE_79498_2_ssh_remove_non_fips_140_2_ciphers () {
     local file="/etc/ssh/sshd_config"
     local setting_name="Ciphers"
     local friendly_name="FIPS 140-2 compliant SSH ciphers"
-    
+
     #10.12 Confirmed defaults
     local oem_value="chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com"
 
@@ -2863,7 +2863,7 @@ CCE_79498_2_ssh_remove_non_fips_140_2_ciphers () {
         case $profile_flag in
             "ent")
                 if [ "$current_string" == "$required_value" ]; then
-                    echo "only $friendly_name are present" 
+                    echo "only $friendly_name are present"
                 else
                     echo "removing non-$friendly_name and adding allowed ciphers"
                     if [ "$current_string" != "" ]; then
@@ -2878,7 +2878,7 @@ CCE_79498_2_ssh_remove_non_fips_140_2_ciphers () {
                 ;;
             "soho")
                 if [ "$current_string" == "$required_value" ]; then
-                    echo "only $friendly_name are present" 
+                    echo "only $friendly_name are present"
                 else
                     echo "removing non-$friendly_name and adding allowed ciphers"
                     if [ "$current_string" != "" ]; then
@@ -2893,7 +2893,7 @@ CCE_79498_2_ssh_remove_non_fips_140_2_ciphers () {
                 ;;
             "sslf")
                 if [ "$current_string" == "$required_value" ]; then
-                    echo "only $friendly_name are present" 
+                    echo "only $friendly_name are present"
                 else
                     echo "removing non-$friendly_name and adding allowed ciphers"
                     if [ "$current_string" != "" ]; then
@@ -3058,7 +3058,7 @@ CCE_79499_0_ssh_remove_non_fips_140_2_macs () {
 # problem with spaces separating the MACs.
 
 # Testing Process
-# Verified accepted sshd MACs by using ssh with -m option to specify a MAC. Query available 
+# Verified accepted sshd MACs by using ssh with -m option to specify a MAC. Query available
 # client MACs by using the command `ssh -Q mac`
 
 # Supported MACs:
@@ -3175,7 +3175,7 @@ CCE_79492_5_ssh_challenge_response_authentication_disallowed () {
         esac
     fi
 
-#Note: In order to see the effectiveness of this setting, change the 
+#Note: In order to see the effectiveness of this setting, change the
 #"PasswordAuthentication" entry to yes
 
 #macOS 10.12 testing
@@ -3702,7 +3702,7 @@ CCE_79476_8_disable_location_services () {
                 if [ $setting_value != 0 ]; then
                     echo "disabling $friendly_name";
                     defaults write $defaults_file $setting_name -bool false
-                
+
                     if [ "$process_running" -gt 0 ]; then
                         #prevents the locationd service from restarting
                         launchctl bootout system/com.apple.locationd 2> /dev/null
@@ -3722,7 +3722,7 @@ CCE_79476_8_disable_location_services () {
                 if [ $setting_value != 0 ]; then
                     echo "disabling $friendly_name";
                     defaults write $defaults_file $setting_name -bool false
-                
+
                     if [ "$process_running" -ne 1 ]; then
                         #restarts the locationd process, since it runs by default
                         launchctl bootstrap system/ $daemon_file
@@ -3748,9 +3748,9 @@ CCE_79476_8_disable_location_services () {
 
 
 #macOS 10.12
-#The launchctl command is necessary to prevent the "locationd" process from immediately 
+#The launchctl command is necessary to prevent the "locationd" process from immediately
 #restarting. This also prevents the location services setting from being toggled in
-#the GUI. To allow location services to be re-enabled using the GUI, run the command 
+#the GUI. To allow location services to be re-enabled using the GUI, run the command
 #`launchctl bootstrap system/ /System/Library/LaunchDaemons/com.apple.locationd.plist`
 }
 
@@ -4222,7 +4222,7 @@ CCE_79475_0_disable_auto_video_DVD_play () {
                 if [ $setting_value != "$required_value" ]; then
                     echo "setting $friendly_name to $friendly_string";
                     defaults write $file $dictionary_name -dict $setting_name -int $required_value
-                
+
                     # SystemUIServer may need to be killed to apply the setting
                     # without restarting, based on similar settings
                     add_processes_to_kill_list SystemUIServer cfprefsd
@@ -4234,7 +4234,7 @@ CCE_79475_0_disable_auto_video_DVD_play () {
                 if [ $setting_value != "$required_value" ]; then
                     echo "setting $friendly_name to $friendly_string";
                     defaults write $file $dictionary_name -dict $setting_name -int $required_value
-                
+
                     # SystemUIServer may need to be killed to apply the setting
                     # without restarting, based on similar settings
                     add_processes_to_kill_list SystemUIServer cfprefsd
@@ -4246,7 +4246,7 @@ CCE_79475_0_disable_auto_video_DVD_play () {
                 if [ $setting_value != "$required_value" ]; then
                     echo "setting $friendly_name to $friendly_string";
                     defaults write $file $dictionary_name -dict $setting_name -int $required_value
-                
+
                     # SystemUIServer may need to be killed to apply the setting
                     # without restarting, based on similar settings
                     add_processes_to_kill_list SystemUIServer cfprefsd
@@ -4339,7 +4339,7 @@ CCE_79445_3_enable_firewall_logging_detail_level () {
 #macOS !0.12
 #Both /var/log/alf.log and /var/log/appfirewall.log exist by default, but the new
 #logging system does not use these files. The new Unified Logging system uses the
-#command `log`. 
+#command `log`.
 
 #10.12 test process:
 #`/usr/libexec/ApplicationFirewall/socketfilterfw --setloggingopt detail`
@@ -4660,8 +4660,8 @@ CCE_79443_8_allow_signed_downloaded_sw_receive_connections () {
 #macOS 10.12
 #Notes: This setting only affects applications not installed by default on macOS.
 
-#Testing: Ran a program from the App Store that requried incoming connections with this 
-#setting turned off. Programs using built-in tools, such as Python, are considered 
+#Testing: Ran a program from the App Store that requried incoming connections with this
+#setting turned off. Programs using built-in tools, such as Python, are considered
 #to be built-in programs, and are not affected by this setting.
 
 #Results
@@ -4748,10 +4748,10 @@ CCE_79470_1_turn_on_firewall () {
 
 
 #10.12 testing
-#Shows as active in GUI immediately, but not effective until after restart. Killing 
+#Shows as active in GUI immediately, but not effective until after restart. Killing
 #the socketfilterfw process has no effect.
 }
- 
+
 
 ######################################################################
 CCE_79440_4_enable_safari_status_bar () {
@@ -5065,7 +5065,7 @@ CCE_79488_3_restrict_screen_sharing_to_specified_users () {
                     defaults delete $file "groupmembers" 2> /dev/null
                     defaults delete $file "nestedgroups" 2> /dev/null
 
-                    add_processes_to_kill_list cfprefsd 
+                    add_processes_to_kill_list cfprefsd
                     killall opendirectoryd #this process does not respond to the -TERM option
                 else
                     echo "$friendly_name no users is already set"
@@ -5080,7 +5080,7 @@ CCE_79488_3_restrict_screen_sharing_to_specified_users () {
                     defaults delete $file "groupmembers" 2> /dev/null
                     defaults delete $file "nestedgroups" 2> /dev/null
 
-                    add_processes_to_kill_list cfprefsd 
+                    add_processes_to_kill_list cfprefsd
                     killall opendirectoryd #this process does not respond to the -TERM option
                 else
                     echo "$friendly_name no users is already set"
@@ -5095,7 +5095,7 @@ CCE_79488_3_restrict_screen_sharing_to_specified_users () {
                     defaults delete $file "groupmembers" 2> /dev/null
                     defaults delete $file "nestedgroups" 2> /dev/null
 
-                    add_processes_to_kill_list cfprefsd 
+                    add_processes_to_kill_list cfprefsd
                     killall opendirectoryd #this process does not respond to the -TERM option
                 else
                     echo "$friendly_name no users is already set"
@@ -5107,7 +5107,7 @@ CCE_79488_3_restrict_screen_sharing_to_specified_users () {
                 defaults write $file nestedgroups -array "$admin_uuid"
                 defaults delete $file "$setting_name" 2> /dev/null
 
-                add_processes_to_kill_list cfprefsd 
+                add_processes_to_kill_list cfprefsd
                 killall opendirectoryd #this process does not respond to the -TERM option
                 ;;
         esac
@@ -5531,7 +5531,7 @@ CCE_79413_1_set_audit_control_flags () {
     fi
 
 #Notes:
-#auditd cannot be disabled across system restarts due to System Integrity Protection. It 
+#auditd cannot be disabled across system restarts due to System Integrity Protection. It
 #can be disabled for the current session using `audit -t`
 
 #macOS 10.12
@@ -5559,7 +5559,7 @@ local doc="CCE_79487_5_restrict_remote_management_to_specific_users    manual-te
     fi
 
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     if [ "$print_flag" != "" ]; then
 
         if [ "$file_exists" == "1" ]; then
@@ -5624,7 +5624,7 @@ CCE_79486_7_restrict_remote_apple_events_to_specific_users () {
 
     if [ -e "$file" ]; then
         file_exists="1"
-    
+
         local key_exists=`defaults read $file | grep -c "$setting_name "`
         if [ "$key_exists" -gt 0 ]; then
             setting_value=`defaults read $file $setting_name -array`
@@ -5772,7 +5772,7 @@ CCE_79486_7_restrict_remote_apple_events_to_specific_users () {
 ######################################################################
 CCE_79446_1_pf_enable_firewall () {
     local doc="CCE_79446_1_pf_enable_firewall                (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
 
     local sam_pfctl_plist="/Library/LaunchDaemons/sam.pfctl.plist"
@@ -5791,7 +5791,7 @@ CCE_79446_1_pf_enable_firewall () {
 #
 # Care must be taken to ensure that the main ruleset does not get flushed,
 # as the nested anchors rely on the anchor point defined here. In addition,
-# to the anchors loaded by this file, some system services would dynamically 
+# to the anchors loaded by this file, some system services would dynamically
 # insert anchors into the main ruleset. These anchors will be added only when
 # the system service is used and would removed on termination of the service.
 #
@@ -5807,8 +5807,8 @@ rdr-anchor "com.apple/*"
 dummynet-anchor "com.apple/*"
 anchor "com.apple/*"
 load anchor "com.apple" from "/etc/pf.anchors/com.apple"'
-    
-    
+
+
     #content for the /etc/pf.conf file, which will append to the existing file
     sam_pf_content='
 #
@@ -5826,7 +5826,7 @@ load anchor "sam_pf_anchors" from "/etc/pf.anchors/sam_pf_anchors"'
     if [ "$anchor_exists" == "1" -a "$load_anchor_exists" == "1" -a "$anchor_loaded" == "1" ]; then
         pf_content_exists="1"
     fi
-        
+
     if [ "$print_flag" != "" ]; then
         if [ "$enabled" == "1" -a "$pf_content_exists" == "1" ]; then
             echo "$friendly_name is enabled";
@@ -5834,11 +5834,11 @@ load anchor "sam_pf_anchors" from "/etc/pf.anchors/sam_pf_anchors"'
             echo "$friendly_name is enabled, but the sam anchor is not loaded"
         elif [ "$enabled" == "0" -a "$pf_content_exists" == "1" ]; then
             echo "$friendly_name is disabled, but the sam anchor is loaded"
-        else 
+        else
             echo "$friendly_name is disabled";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         if [ ! -e "$sam_pfctl_plist" ]; then
             #copy the plist because SIP prevents changes to /System/Library
@@ -5855,10 +5855,10 @@ load anchor "sam_pf_anchors" from "/etc/pf.anchors/sam_pf_anchors"'
                 if [ ! -s "$sam_anchor" ]; then
                     echo "#sam pf anchor file" > "$sam_anchor"
                 fi
- 
+
                 #make backup of original pf.conf
                 if [ ! -e "${pf_conf}.bk" ]; then
-                    cp "${pf_conf}" "${pf_conf}.bk"    
+                    cp "${pf_conf}" "${pf_conf}.bk"
                 fi
                 #enable the firewall
                 if [ "$enabled" == "0" ]; then
@@ -5885,7 +5885,7 @@ load anchor "sam_pf_anchors" from "/etc/pf.anchors/sam_pf_anchors"'
 
                 #make backup of original pf.conf
                 if [ ! -e "${pf_conf}.bk" ]; then
-                    cp "${pf_conf}" "${pf_conf}.bk"    
+                    cp "${pf_conf}" "${pf_conf}.bk"
                 fi
                 #enable the firewall
                 if [ "$enabled" == "0" ]; then
@@ -5912,7 +5912,7 @@ load anchor "sam_pf_anchors" from "/etc/pf.anchors/sam_pf_anchors"'
 
                 #make backup of original pf.conf
                 if [ ! -e "${pf_conf}.bk" ]; then
-                    cp "${pf_conf}" "${pf_conf}.bk"    
+                    cp "${pf_conf}" "${pf_conf}.bk"
                 fi
                 #enable the firewall
                 if [ "$enabled" == "0" ]; then
@@ -5937,12 +5937,12 @@ load anchor "sam_pf_anchors" from "/etc/pf.anchors/sam_pf_anchors"'
                 #make pf not run at system startup
                 launchctl disable system/sam.pfctl
                 launchctl bootout system/sam.pfctl
-                
+
                 #remove anchor text from $pf_conf
-                echo "$oem_pf_contents" > "$pf_conf" 
+                echo "$oem_pf_contents" > "$pf_conf"
                 ;;
         esac
-        pfctl -f rules 2> /dev/null #flush the pf ruleset (reload the rules)        
+        pfctl -f rules 2> /dev/null #flush the pf ruleset (reload the rules)
     fi
 
 #macOS 10.12 testing
@@ -5952,16 +5952,16 @@ load anchor "sam_pf_anchors" from "/etc/pf.anchors/sam_pf_anchors"'
 ######################################################################
 CCE_79450_3_pf_rule_ftp () {
     local doc="CCE_79450_3_pf_rule_ftp                       (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="20 21"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="ftp --ports $port-- pf firewall rule"
     local rule_text="block in proto { tcp udp } to any port { $port }"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -5969,11 +5969,11 @@ CCE_79450_3_pf_rule_ftp () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -5983,7 +5983,7 @@ CCE_79450_3_pf_rule_ftp () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6007,7 +6007,7 @@ CCE_79450_3_pf_rule_ftp () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6016,7 +6016,7 @@ CCE_79450_3_pf_rule_ftp () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked ftp client connection.
 }
@@ -6024,16 +6024,16 @@ CCE_79450_3_pf_rule_ftp () {
 ######################################################################
 CCE_79466_9_pf_rule_ssh () {
     local doc="CCE_79466_9_pf_rule_ssh                       (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="22"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="ssh --port $port-- pf firewall rule"
     local rule_text="block in proto { tcp udp } to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6041,12 +6041,12 @@ CCE_79466_9_pf_rule_ssh () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6056,7 +6056,7 @@ CCE_79466_9_pf_rule_ssh () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6080,16 +6080,16 @@ CCE_79466_9_pf_rule_ssh () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
                 ;;
         esac
-        
+
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked ssh client connection.
 }
@@ -6097,16 +6097,16 @@ CCE_79466_9_pf_rule_ssh () {
 ######################################################################
 CCE_79467_7_pf_rule_telnet () {
     local doc="CCE_79467_7_pf_rule_telnet                    (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="23"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="telnet --port $port-- pf firewall rule"
     local rule_text="block in proto { tcp udp } to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6114,12 +6114,12 @@ CCE_79467_7_pf_rule_telnet () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6129,7 +6129,7 @@ CCE_79467_7_pf_rule_telnet () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6153,7 +6153,7 @@ CCE_79467_7_pf_rule_telnet () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6162,7 +6162,7 @@ CCE_79467_7_pf_rule_telnet () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked telnet client connection.
 }
@@ -6171,16 +6171,16 @@ CCE_79467_7_pf_rule_telnet () {
 ######################################################################
 CCE_79468_5_pf_rule_tftp () {
     local doc="CCE_79468_5_pf_rule_tftp                   (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="69"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="tftp --port $port-- pf firewall rule"
     local rule_text="block proto { tcp udp } to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6188,11 +6188,11 @@ CCE_79468_5_pf_rule_tftp () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6202,7 +6202,7 @@ CCE_79468_5_pf_rule_tftp () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6226,7 +6226,7 @@ CCE_79468_5_pf_rule_tftp () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6235,7 +6235,7 @@ CCE_79468_5_pf_rule_tftp () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked tftp client connection.
 }
@@ -6243,16 +6243,16 @@ CCE_79468_5_pf_rule_tftp () {
 ######################################################################
 CCE_79449_5_pf_rule_finger () {
     local doc="CCE_79449_5_pf_rule_finger                 (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="79"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="finger --port $port-- pf firewall rule"
     local rule_text="block proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6260,11 +6260,11 @@ CCE_79449_5_pf_rule_finger () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6274,7 +6274,7 @@ CCE_79449_5_pf_rule_finger () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6298,7 +6298,7 @@ CCE_79449_5_pf_rule_finger () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6307,7 +6307,7 @@ CCE_79449_5_pf_rule_finger () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked finger client connection.
 }
@@ -6315,16 +6315,16 @@ CCE_79449_5_pf_rule_finger () {
 ######################################################################
 CCE_79451_1_pf_rule_http () {
     local doc="CCE_79451_1_pf_rule_http                   (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="80"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="http --port $port-- pf firewall rule"
     local rule_text="block in proto { tcp udp } to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6332,11 +6332,11 @@ CCE_79451_1_pf_rule_http () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6346,7 +6346,7 @@ CCE_79451_1_pf_rule_http () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6370,7 +6370,7 @@ CCE_79451_1_pf_rule_http () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6379,7 +6379,7 @@ CCE_79451_1_pf_rule_http () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked http client connection.
 }
@@ -6387,16 +6387,16 @@ CCE_79451_1_pf_rule_http () {
 ######################################################################
 CCE_79457_8_pf_rule_nfs () {
     local doc="CCE_79457_8_pf_rule_nfs                    (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="2049"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="nfs --port $port-- pf firewall rule"
     local rule_text="block proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6404,11 +6404,11 @@ CCE_79457_8_pf_rule_nfs () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6418,7 +6418,7 @@ CCE_79457_8_pf_rule_nfs () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6442,7 +6442,7 @@ CCE_79457_8_pf_rule_nfs () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6451,7 +6451,7 @@ CCE_79457_8_pf_rule_nfs () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked port used by nfs.
 }
@@ -6459,16 +6459,16 @@ CCE_79457_8_pf_rule_nfs () {
 ######################################################################
 CCE_79462_8_pf_rule_remote_apple_events () {
     local doc="CCE_79462_8_pf_rule_remote_apple_events    (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="3031"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="remote apple events --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6476,11 +6476,11 @@ CCE_79462_8_pf_rule_remote_apple_events () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6490,7 +6490,7 @@ CCE_79462_8_pf_rule_remote_apple_events () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6514,7 +6514,7 @@ CCE_79462_8_pf_rule_remote_apple_events () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6523,7 +6523,7 @@ CCE_79462_8_pf_rule_remote_apple_events () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked remote apple events.
 }
@@ -6531,9 +6531,9 @@ CCE_79462_8_pf_rule_remote_apple_events () {
 ######################################################################
 CCE_79464_4_pf_rule_smb () {
     local doc="CCE_79464_4_pf_rule_smb                    (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="139 445"
     local port2="137 138"
@@ -6542,9 +6542,9 @@ CCE_79464_4_pf_rule_smb () {
     local rule_text1="block proto tcp to any port { $port }"
     local rule_text2="block proto udp to any port { $port2 }"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
-        rule_present=`grep -c "^$rule_text1" "$anchor_file"` 
+        rule_present=`grep -c "^$rule_text1" "$anchor_file"`
         if [ "$rule_present" != "0" ]; then
             rule_present=`grep -c "^$rule_text2" "$anchor_file"`
         fi
@@ -6553,11 +6553,11 @@ CCE_79464_4_pf_rule_smb () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6568,7 +6568,7 @@ CCE_79464_4_pf_rule_smb () {
                     echo "$rule_text2" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6594,7 +6594,7 @@ CCE_79464_4_pf_rule_smb () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text1)|(^$rule_text2)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6603,7 +6603,7 @@ CCE_79464_4_pf_rule_smb () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked ports used by smb.
 }
@@ -6611,16 +6611,16 @@ CCE_79464_4_pf_rule_smb () {
 ######################################################################
 CCE_79447_9_pf_rule_apple_file_service () {
     local doc="CCE_79447_9_pf_rule_apple_file_service     (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="548"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="apple file service --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port { $port }"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6628,11 +6628,11 @@ CCE_79447_9_pf_rule_apple_file_service () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6642,7 +6642,7 @@ CCE_79447_9_pf_rule_apple_file_service () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6666,7 +6666,7 @@ CCE_79447_9_pf_rule_apple_file_service () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6675,7 +6675,7 @@ CCE_79447_9_pf_rule_apple_file_service () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked apple file service port.
 }
@@ -6683,16 +6683,16 @@ CCE_79447_9_pf_rule_apple_file_service () {
 ######################################################################
 CCE_79469_3_pf_rule_uucp () {
     local doc="CCE_79469_3_pf_rule_uucp                   (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="540"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="uucp --port $port-- pf firewall rule"
     local rule_text="block proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6700,11 +6700,11 @@ CCE_79469_3_pf_rule_uucp () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6714,7 +6714,7 @@ CCE_79469_3_pf_rule_uucp () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6738,7 +6738,7 @@ CCE_79469_3_pf_rule_uucp () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6747,7 +6747,7 @@ CCE_79469_3_pf_rule_uucp () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked uucp port.
 }
@@ -6755,16 +6755,16 @@ CCE_79469_3_pf_rule_uucp () {
 ######################################################################
 CCE_79463_6_pf_rule_screen_sharing () {
     local doc="CCE_79463_6_pf_rule_screen_sharing         (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="5900"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="screen_sharing --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6772,11 +6772,11 @@ CCE_79463_6_pf_rule_screen_sharing () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6786,7 +6786,7 @@ CCE_79463_6_pf_rule_screen_sharing () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6810,7 +6810,7 @@ CCE_79463_6_pf_rule_screen_sharing () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6819,7 +6819,7 @@ CCE_79463_6_pf_rule_screen_sharing () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked screen sharing port.
 }
@@ -6827,15 +6827,15 @@ CCE_79463_6_pf_rule_screen_sharing () {
 ######################################################################
 CCE_79452_9_pf_rule_icmp () {
     local doc="CCE_79452_9_pf_rule_icmp                      (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="icmp pf firewall rule"
     local rule_text="block in proto icmp"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6843,11 +6843,11 @@ CCE_79452_9_pf_rule_icmp () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6857,7 +6857,7 @@ CCE_79452_9_pf_rule_icmp () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6881,7 +6881,7 @@ CCE_79452_9_pf_rule_icmp () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6890,7 +6890,7 @@ CCE_79452_9_pf_rule_icmp () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked icmp port.
 }
@@ -6898,16 +6898,16 @@ CCE_79452_9_pf_rule_icmp () {
 ######################################################################
 CCE_79465_1_pf_rule_smtp () {
     local doc="CCE_79465_1_pf_rule_smtp                   (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="25"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="smtp --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6915,11 +6915,11 @@ CCE_79465_1_pf_rule_smtp () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -6929,7 +6929,7 @@ CCE_79465_1_pf_rule_smtp () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -6953,7 +6953,7 @@ CCE_79465_1_pf_rule_smtp () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -6962,7 +6962,7 @@ CCE_79465_1_pf_rule_smtp () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked smtp port.
 }
@@ -6970,16 +6970,16 @@ CCE_79465_1_pf_rule_smtp () {
 ######################################################################
 CCE_79459_4_pf_rule_pop3 () {
     local doc="CCE_79459_4_pf_rule_pop3                   (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="110"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="pop3 --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -6987,12 +6987,12 @@ CCE_79459_4_pf_rule_pop3 () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7002,7 +7002,7 @@ CCE_79459_4_pf_rule_pop3 () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7026,7 +7026,7 @@ CCE_79459_4_pf_rule_pop3 () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7035,7 +7035,7 @@ CCE_79459_4_pf_rule_pop3 () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked pop3 port.
 }
@@ -7043,16 +7043,16 @@ CCE_79459_4_pf_rule_pop3 () {
 ######################################################################
 CCE_79460_2_pf_rule_pop3s () {
     local doc="CCE_79460_2_pf_rule_pop3s                  (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="995"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="pop3s --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -7060,12 +7060,12 @@ CCE_79460_2_pf_rule_pop3s () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7075,7 +7075,7 @@ CCE_79460_2_pf_rule_pop3s () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7099,7 +7099,7 @@ CCE_79460_2_pf_rule_pop3s () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7108,7 +7108,7 @@ CCE_79460_2_pf_rule_pop3s () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked pop3s port.
 }
@@ -7117,16 +7117,16 @@ CCE_79460_2_pf_rule_pop3s () {
 ######################################################################
 CCE_79453_7_pf_rule_imap () {
     local doc="CCE_79453_7_pf_rule_imap                   (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="143"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="imap --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -7134,12 +7134,12 @@ CCE_79453_7_pf_rule_imap () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7149,7 +7149,7 @@ CCE_79453_7_pf_rule_imap () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7173,7 +7173,7 @@ CCE_79453_7_pf_rule_imap () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7182,7 +7182,7 @@ CCE_79453_7_pf_rule_imap () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked imap port.
 }
@@ -7190,16 +7190,16 @@ CCE_79453_7_pf_rule_imap () {
 ######################################################################
 CCE_79454_5_pf_rule_imaps () {
     local doc="CCE_79454_5_pf_rule_imaps                  (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="993"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="imaps --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -7207,12 +7207,12 @@ CCE_79454_5_pf_rule_imaps () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7222,7 +7222,7 @@ CCE_79454_5_pf_rule_imaps () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7246,7 +7246,7 @@ CCE_79454_5_pf_rule_imaps () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7255,7 +7255,7 @@ CCE_79454_5_pf_rule_imaps () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked imaps port.
 }
@@ -7263,16 +7263,16 @@ CCE_79454_5_pf_rule_imaps () {
 ######################################################################
 CCE_79461_0_pf_rule_printer_sharing () {
     local doc="CCE_79461_0_pf_rule_printer_sharing        (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="631"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="printer sharing --port $port-- pf firewall rule"
     local rule_text="block in proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -7280,12 +7280,12 @@ CCE_79461_0_pf_rule_printer_sharing () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7295,7 +7295,7 @@ CCE_79461_0_pf_rule_printer_sharing () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7319,7 +7319,7 @@ CCE_79461_0_pf_rule_printer_sharing () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7328,7 +7328,7 @@ CCE_79461_0_pf_rule_printer_sharing () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked printer sharing port.
 }
@@ -7336,16 +7336,16 @@ CCE_79461_0_pf_rule_printer_sharing () {
 ######################################################################
 CCE_79448_7_pf_rule_bonjour () {
     local doc="CCE_79448_7_pf_rule_bonjour                (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="1900"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="bonjour component SSDP --port $port-- pf firewall rule"
     local rule_text="block proto udp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -7353,12 +7353,12 @@ CCE_79448_7_pf_rule_bonjour () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7368,7 +7368,7 @@ CCE_79448_7_pf_rule_bonjour () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7392,7 +7392,7 @@ CCE_79448_7_pf_rule_bonjour () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7401,7 +7401,7 @@ CCE_79448_7_pf_rule_bonjour () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked Bonjour port.
 }
@@ -7409,16 +7409,16 @@ CCE_79448_7_pf_rule_bonjour () {
 ######################################################################
 CCE_79456_0_pf_rule_mDNSResponder () {
     local doc="CCE_79456_0_pf_rule_mDNSResponder          (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="5353"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="mDNSResponder --port $port-- pf firewall rule"
     local rule_text="block proto udp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -7426,12 +7426,12 @@ CCE_79456_0_pf_rule_mDNSResponder () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7441,7 +7441,7 @@ CCE_79456_0_pf_rule_mDNSResponder () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7465,7 +7465,7 @@ CCE_79456_0_pf_rule_mDNSResponder () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7474,8 +7474,8 @@ CCE_79456_0_pf_rule_mDNSResponder () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
-#Tested using Bonjour Browser. After blocking the port, the services were no 
+
+#Tested using Bonjour Browser. After blocking the port, the services were no
 #longer discoverable by a networked computer.
 
 #macOS 10.12 testing
@@ -7485,16 +7485,16 @@ CCE_79456_0_pf_rule_mDNSResponder () {
 ######################################################################
 CCE_79455_2_pf_rule_itunes_sharing () {
     local doc="CCE_79455_2_pf_rule_itunes_sharing         (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="3689"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="iTunes sharing --port $port-- pf firewall rule"
     local rule_text="block proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -7502,12 +7502,12 @@ CCE_79455_2_pf_rule_itunes_sharing () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7517,7 +7517,7 @@ CCE_79455_2_pf_rule_itunes_sharing () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7541,7 +7541,7 @@ CCE_79455_2_pf_rule_itunes_sharing () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7550,7 +7550,7 @@ CCE_79455_2_pf_rule_itunes_sharing () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #macOS 10.12 testing
 #Successfully blocked iTunes sharing port.
 }
@@ -7559,16 +7559,16 @@ CCE_79455_2_pf_rule_itunes_sharing () {
 ######################################################################
 CCE_79458_6_pf_rule_optical_drive_sharing () {
     local doc="CCE_79458_6_pf_rule_optical_drive_sharing      (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local pf_conf="/etc/pf.conf"
     local port="49152"
     local anchor_file="/etc/pf.anchors/sam_pf_anchors" #pf rules go here
     local friendly_name="optical drive sharing --port $port-- pf firewall rule"
     local rule_text="block proto tcp to any port $port"
     local rule_present=0
-    
+
     if [ -e "$anchor_file" ]; then
         rule_present=`grep -c "^$rule_text" "$anchor_file"`
     fi
@@ -7576,12 +7576,12 @@ CCE_79458_6_pf_rule_optical_drive_sharing () {
     if [ "$print_flag" != "" ]; then
         if [ "$rule_present" == "0" ]; then
             echo "$friendly_name does not exist";
-        else 
+        else
             echo "$friendly_name is present";
         fi
     fi
-    
-    
+
+
     if [ "$set_flag" != "" ]; then
         case $profile_flag in
             "ent")
@@ -7591,7 +7591,7 @@ CCE_79458_6_pf_rule_optical_drive_sharing () {
                     echo "$rule_text" >> "$anchor_file"
                 else
                     echo "$friendly_name already enabled"
-                fi 
+                fi
                 ;;
             "soho")
                 if [ "$rule_present" == "0" ]; then
@@ -7615,7 +7615,7 @@ CCE_79458_6_pf_rule_optical_drive_sharing () {
                 if [ "$rule_present" != "0" ]; then
                     echo "disabling $friendly_name"
                     local oem_content="$(egrep -v "(^$rule_text)|(^#$friendly_name)" "$anchor_file")"
-                    echo "$oem_content" > "$anchor_file" 
+                    echo "$oem_content" > "$anchor_file"
                 else
                     echo "$friendly_name already disabled"
                 fi
@@ -7624,7 +7624,7 @@ CCE_79458_6_pf_rule_optical_drive_sharing () {
 
         pfctl -f "$pf_conf" 2> /dev/null
     fi
-    
+
 #Testing notes: When trying to use an optical drive over the network, the pf rule prevented
 #the drive's contents from being accessed.
 
@@ -7636,9 +7636,9 @@ CCE_79458_6_pf_rule_optical_drive_sharing () {
 ######################################################################
 CCE_79410_7_audit_log_max_file_size() {
     local doc="CCE_79410_7_audit_log_max_file_size        (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local file="/etc/security/audit_control"
     local setting_name="filesz"
     local friendly_name="audit log individual file size"
@@ -7743,9 +7743,9 @@ CCE_79410_7_audit_log_max_file_size() {
 ######################################################################
 CCE_79411_5_audit_log_retention () {
     local doc="CCE_79411_5_audit_log_retention            (manual-test-PASSED)"
-    
+
     if [ "$list_flag" != "" ]; then echo "$doc"; fi
-    
+
     local file="/etc/security/audit_control"
     local setting_name="expire-after"
     local friendly_name="audit logs expire after"
@@ -8117,7 +8117,7 @@ CCE_79506_2_bluetooth_turn_off_bluetooth () {
 
 #NEEDS_REAL_HARDWARE
 
-#macOS 10.12 
+#macOS 10.12
 #Restart required.
 }
 
@@ -8149,7 +8149,7 @@ CCE_79509_6_show_bluetooth_status_in_menu_bar () {
             echo "$friendly_name enabled";
         fi
     fi
-    
+
 
     if [ "$set_flag" != "" ]; then
 
@@ -8158,7 +8158,7 @@ CCE_79509_6_show_bluetooth_status_in_menu_bar () {
                 if [ "$value_exists" == 0 ]; then
                     echo "enabling $friendly_name";
                     defaults write $file $setting_name -array-add "$setting_value"
-                
+
                     add_processes_to_kill_list SystemUIServer cfprefsd
                 else
                     echo "$friendly_name is already enabled"
@@ -8168,7 +8168,7 @@ CCE_79509_6_show_bluetooth_status_in_menu_bar () {
                 if [ "$value_exists" == 0 ]; then
                     echo "enabling $friendly_name";
                     defaults write $file $setting_name -array-add "$setting_value"
-                
+
                     add_processes_to_kill_list SystemUIServer cfprefsd
                 else
                     echo "$friendly_name is already enabled"
@@ -8178,7 +8178,7 @@ CCE_79509_6_show_bluetooth_status_in_menu_bar () {
                 if [ "$value_exists" == 0 ]; then
                     echo "enabling $friendly_name";
                     defaults write $file $setting_name -array-add "$setting_value"
-                
+
                     add_processes_to_kill_list SystemUIServer cfprefsd
                 else
                     echo "$friendly_name is already enabled"
@@ -8188,7 +8188,7 @@ CCE_79509_6_show_bluetooth_status_in_menu_bar () {
                 if [ "$value_exists" == 1 ]; then
                     echo "disabling $friendly_name";
                     /usr/libexec/PlistBuddy -c "Delete :$setting_name $setting_value" $file
-                    add_processes_to_kill_list SystemUIServer cfprefsd 
+                    add_processes_to_kill_list SystemUIServer cfprefsd
                 else
                     echo "$friendly_name is already disabled"
                 fi
@@ -8391,8 +8391,8 @@ $short_names"
         new_system_name="$new_name"
 
     fi
-#This function assists with checks in CCE_79477_6_change_computer_name, 
-#CCE_79478_4_change_host_name, CCE_79479_2_change_local_host_name, 
+#This function assists with checks in CCE_79477_6_change_computer_name,
+#CCE_79478_4_change_host_name, CCE_79479_2_change_local_host_name,
 #CCE_79480_0_change_net_bios_name
 }
 
@@ -8659,7 +8659,7 @@ CCE_79491_7_enable_display_sleep () {
 
     #If the power management file doesn't exist, write a default value to create it.
     #This prevents an error when trying to read/write this file.
-    power_management_helper 
+    power_management_helper
 
     if [ -e $file ]; then
         key_exists=`defaults read $file | grep "$internal_name" | wc -l`
@@ -8739,7 +8739,7 @@ CCE_79489_1_disable_computer_sleep () {
 
     #If the power management file doesn't exist, write a default value to create it.
     #This prevents an error when trying to read/write this file.
-    power_management_helper 
+    power_management_helper
 
     if [ -e $file ]; then
         key_exists=`defaults read $file | grep "$internal_name" | wc -l`
@@ -8819,7 +8819,7 @@ CCE_79490_9_disable_wake_for_network_access () {
 
     #If the power management file doesn't exist, write a default value to create it.
     #This prevents an error when trying to read/write this file.
-    power_management_helper 
+    power_management_helper
 
     if [ -e $file ]; then
         key_exists=`defaults read $file | grep "$internal_name" | wc -l`
@@ -8901,7 +8901,7 @@ local doc="CCE_79483_4_disable_bonjour_advertising                (manual-test-P
     local setting_name="NoMulticastAdvertisements"
     local setting_value=0 #default value on 10.12
     local friendly_name="Bonjour advertising"
-    
+
     if [ -e "$file" ]; then
         local key_exists=`defaults read $file | grep -c $setting_name`
         if [ "$key_exists" -gt 0 ]; then
@@ -8924,9 +8924,9 @@ local doc="CCE_79483_4_disable_bonjour_advertising                (manual-test-P
                 if [ "$setting_value" == 0 ]; then
                     echo "disabling $friendly_name";
                     defaults write $file $setting_name -bool true
-                
+
                     add_processes_to_kill_list cfprefsd
-                
+
                 else
                     echo "$friendly_name is already disabled"
                 fi
@@ -8938,9 +8938,9 @@ local doc="CCE_79483_4_disable_bonjour_advertising                (manual-test-P
                 if [ "$setting_value" == 0 ]; then
                     echo "disabling $friendly_name";
                     defaults write $file $setting_name -bool true
-                
+
                     add_processes_to_kill_list cfprefsd
-                
+
                 else
                     echo "$friendly_name is already disabled"
                 fi
@@ -8949,9 +8949,9 @@ local doc="CCE_79483_4_disable_bonjour_advertising                (manual-test-P
                 if [ "$setting_value" == 1 ]; then
                     echo "enabling $friendly_name";
                     defaults write $file $setting_name -bool false
-                
+
                     add_processes_to_kill_list cfprefsd
-                
+
                 else
                     echo "$friendly_name is already enabled"
                 fi
@@ -8961,7 +8961,7 @@ local doc="CCE_79483_4_disable_bonjour_advertising                (manual-test-P
 
 
 #macOS 10.12
-#Works after restart. The computer no longer shows up in Finder on other computers. 
+#Works after restart. The computer no longer shows up in Finder on other computers.
 #It is still accessible on the network using SMB, so this setting works as expected.
 #Could not connect using AFP.
 }
@@ -9090,7 +9090,7 @@ CCE_79437_0_disable_siri () {
                 if [ "$setting_value" != "0" ]; then
                     echo "disabling $friendly_name"
                     defaults write "$file" "$setting_name" -int 0
-                    add_processes_to_kill_list cfprefsd Siri 
+                    add_processes_to_kill_list cfprefsd Siri
                 else
                     echo "$friendly_name is already disabled"
                 fi
@@ -9136,7 +9136,7 @@ CCE_79406_5_enable_gatekeeper () {
     local restrictive_msg="Gatekeeper only allows apps downloaded from the App Store"
 
     #default is allow App Store and identified developers
-    local setting_value="$(spctl --status -v)" 
+    local setting_value="$(spctl --status -v)"
     local gatekeeper_on="$(echo $setting_value | grep -c "assessments enabled")"
 
     #if gatekeeper is off, the developer string is not present
@@ -9197,7 +9197,7 @@ CCE_79406_5_enable_gatekeeper () {
                 ;;
         esac
     fi
-   
+
 #testing process
 #Used Atom text editor downloaded from atom.io. After trying to open the file,
 #press cancel so an exception is not stored.
@@ -9241,7 +9241,7 @@ CCE_79435_4_disable_lookup_suggestions () {
                 if [ "$setting_value" != "1" ]; then
                     echo "disabling $friendly_name"
                     defaults write "$file" "$setting_name" -int 1
-                    add_processes_to_kill_list cfprefsd 
+                    add_processes_to_kill_list cfprefsd
                 else
                     echo "$friendly_name is already disabled"
                 fi
@@ -9250,7 +9250,7 @@ CCE_79435_4_disable_lookup_suggestions () {
                 if [ "$setting_value" != "1" ]; then
                     echo "disabling $friendly_name"
                     defaults write "$file" "$setting_name" -int 1
-                    add_processes_to_kill_list cfprefsd 
+                    add_processes_to_kill_list cfprefsd
                 else
                     echo "$friendly_name is already disabled"
                 fi
@@ -9259,7 +9259,7 @@ CCE_79435_4_disable_lookup_suggestions () {
                 if [ "$setting_value" != "1" ]; then
                     echo "disabling $friendly_name"
                     defaults write "$file" "$setting_name" -int 1
-                    add_processes_to_kill_list cfprefsd 
+                    add_processes_to_kill_list cfprefsd
                 else
                     echo "$friendly_name is already disabled"
                 fi
@@ -9268,7 +9268,7 @@ CCE_79435_4_disable_lookup_suggestions () {
                 if [ "$setting_value" != "0" ]; then
                     echo "enabling $friendly_name"
                     defaults write "$file" "$setting_name" -int 0
-                    add_processes_to_kill_list cfprefsd 
+                    add_processes_to_kill_list cfprefsd
                 else
                     echo "$friendly_name is already enabled"
                 fi
@@ -9450,7 +9450,7 @@ CCE_79484_2_disable_nfs () {
 
                     launchctl disable "${setting_name[1]}"
                     launchctl bootout "${setting_name[1]}" 2> /dev/null
-                    
+
                     launchctl disable "${setting_name[2]}"
                     launchctl bootout "${setting_name[2]}" 2> /dev/null
                 else
@@ -9465,7 +9465,7 @@ CCE_79484_2_disable_nfs () {
 
                     launchctl disable "${setting_name[1]}"
                     launchctl bootout "${setting_name[1]}" 2> /dev/null
-                    
+
                     launchctl disable "${setting_name[2]}"
                     launchctl bootout "${setting_name[2]}" 2> /dev/null
                 else
@@ -9480,7 +9480,7 @@ CCE_79484_2_disable_nfs () {
 
                     launchctl disable "${setting_name[1]}"
                     launchctl bootout "${setting_name[1]}" 2> /dev/null
-                    
+
                     launchctl disable "${setting_name[2]}"
                     launchctl bootout "${setting_name[2]}" 2> /dev/null
                 else
@@ -9582,7 +9582,7 @@ CCE_79481_8_disable_apple_file_server () {
                 ;;
             "oem")
                 if [ "${setting_value[0]}" != "0" ]; then
-                    echo "disabling AFP" 
+                    echo "disabling AFP"
                     launchctl disable "${setting_name[0]}" 2> /dev/null
                     launchctl bootout "${setting_name[0]}" 2> /dev/null
                 fi
@@ -9682,9 +9682,9 @@ CCE_79442_0_terminal_secure_keyboard () {
 
 #Testing process
 #Used the Keyboard Viewer program accessed through the "Show keyboard and emoji viewers
-#in menu bar" option in System Preferences/Keyboard. Non-modifier keys in the viewer 
+#in menu bar" option in System Preferences/Keyboard. Non-modifier keys in the viewer
 #highlight when typing on the physical keyboard when this setting is disabled. They no
-#longer highlight when the setting is enabled, and the "Secure Keyboard Entry" option 
+#longer highlight when the setting is enabled, and the "Secure Keyboard Entry" option
 #under the Terminal top menu is checked.
 
 #macOS 10.12 testing
@@ -9752,7 +9752,7 @@ CCE_79408_1_set_umask () {
         esac
     fi
 
-#Worked after restart. Note that the umask value stored in the 
+#Worked after restart. Note that the umask value stored in the
 #/private/var/db/com.apple.xpc.launchd/config/user.plist file is in base 10, not octal. The
 #value is reported normally when using the `umask` command to see the current state.
 
@@ -9769,7 +9769,7 @@ CCE_79405_7_check_system_integrity_protection_status () {
 
     local file="/System/Library/Sandbox/rootless.conf"
     local friendly_name="System Integrity Protection"
-    
+
     if [ "$print_flag" != "" ]; then
         local result="$(csrutil status | egrep -io "(enabled|disabled)")"
         echo "$friendly_name is $result"
@@ -9813,7 +9813,7 @@ CCE_79409_9_user_home_directories_permissions () {
     local friendly_name="home directory permissions"
     local required_value="700"
 
-    
+
     if [ "$print_flag" != "" ]; then
         echo "$friendly_name are the following:"
         stat -f "Path: %N   Permissions: %Lp" "$file"
@@ -9886,7 +9886,7 @@ parse_arguments () {
             c)
                 echo "checking feature TBD" >&2
                 ;;
-        
+
             h)
                 echo "$usage_message"
                 exit 0
@@ -9918,8 +9918,8 @@ parse_arguments () {
         esac
     done
 
-    if [ "$profile_flag" == "" ]; then 
-        profile_flag="ent" 
+    if [ "$profile_flag" == "" ]; then
+        profile_flag="ent"
     fi
 }
 
